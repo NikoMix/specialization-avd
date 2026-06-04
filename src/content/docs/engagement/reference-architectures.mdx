@@ -1,0 +1,187 @@
+---
+title: "Reference Architectures"
+description: Three reusable AVD reference architectures — single-session, pooled multi-session, and personal host pool.
+sidebar:
+  label: "Reference Architectures"
+  order: 6
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## When to use this
+
+Use during [Discovery](../discovery-workshop/) to pick the right pattern
+per persona, and again during [HLD](../deliverables/hld-template/) authoring
+as the structural backbone of the design.
+
+## The three patterns
+
+| Pattern | Best for | Density | Cost per user | Persistence |
+|---|---|---|---|---|
+| **Pooled multi-session** | Knowledge workers, call centre, shift workers | Highest (4–16 sessions / host) | Lowest | Stateless (profile via FSLogix) |
+| **Personal host pool** | Developers, power users, GPU, regulated isolation | 1 session / host (assigned) | Highest | Persistent at host level |
+| **Single-session pooled** | Per-session isolation without permanent assignment | 1 session / host (rotating) | Mid | Stateless (profile via FSLogix) |
+
+<Tabs>
+<TabItem label="Pooled multi-session">
+
+### Pooled multi-session — default for knowledge workers
+
+**Topology**
+
+- Host pool: pooled, load-balancing breadth-first
+- OS: Windows 11 Enterprise multi-session 23H2 (or current)
+- Session host SKU: D8as v5 (typical knowledge worker, 8 sessions / host)
+- Max session limit per host: per persona density test (B.4.1)
+- Scaling plan: working-hours schedule + ramp-up safety margin
+
+**Identity**
+
+- Entra-joined + Intune
+- MFA via Conditional Access policy targeting AVD client app
+- AVD admin model: PIM eligible, JIT activation
+
+**Profile storage**
+
+- FSLogix on Azure Files Premium share, Kerberos auth
+- Profile container + Office container split
+- Per-user budget: 30 GB starting
+
+**Networking**
+
+- RDP Shortpath for managed networks enabled
+- VNet peered to hub for shared services + on-prem reachability
+- Private endpoints for storage (FSLogix share, Key Vault)
+- Egress firewall: AVD service URLs allow-listed
+
+**Image management**
+
+- Custom gold image built by Azure Image Builder
+- Monthly refresh; validation pool first, production second
+- Pre-staged: M365 Apps (shared-computer activation), Teams (AVD-optimised),
+  FSLogix agent, AVD agent, base LOB apps
+
+**App delivery**
+
+- M365 Apps: per-host install with shared-computer activation
+- Shared apps: AppAttach (MSIX) where possible
+- Per-user apps: Intune
+- Legacy COM-bound apps: per-host install in gold image
+
+**BCDR**
+
+- Paired-region host pool (cold standby) + FSLogix replication
+- RPO: ≤ container replication interval (e.g. 1h)
+- RTO: ≤ 4h (cold pool warm-up)
+
+</TabItem>
+<TabItem label="Personal host pool">
+
+### Personal host pool — developers, power users, GPU
+
+**Topology**
+
+- Host pool: personal, assignment direct or automatic-on-first-login
+- OS: Windows 11 Enterprise 23H2
+- Session host SKU: D16as v5 (or NCas T4 for GPU)
+- 1 user assigned per host
+- Scaling plan: time-based deallocate when offline (cost lever)
+
+**Identity**
+
+- Entra-joined + Intune
+- Hybrid join if LOB tools need on-prem AD
+
+**Profile storage**
+
+- Locally on the personal VM (persistent disk)
+- FSLogix optional for OneDrive Known Folder Move container only
+
+**Networking**
+
+- Same hub-spoke pattern as pooled
+- RDP Shortpath enabled
+- Outbound internet via Azure Firewall / customer proxy
+
+**Image management**
+
+- Gold image (lighter customisation than pooled — users install their own
+  tools)
+- Quarterly refresh; user reinstall pattern documented in runbook
+
+**App delivery**
+
+- Local install rights for developers / power users (with caveats)
+- Intune baseline for managed apps
+- M365 Apps user-bound activation
+
+**BCDR**
+
+- Personal host pool is the highest-risk pattern for BCDR (state is on the
+  VM). Document: backup strategy (Azure Backup), user-data on OneDrive
+  / network share, host re-provisioning runbook
+
+</TabItem>
+<TabItem label="Single-session pooled">
+
+### Single-session pooled — per-session isolation
+
+**Topology**
+
+- Host pool: pooled, max session limit = 1
+- OS: Windows 11 Enterprise 23H2 (single-session)
+- Session host SKU: D4as v5 (typical)
+- Scaling plan: working-hours schedule
+- Use case: regulated isolation, GPU workload that can't share, audit
+  boundary per session
+
+**Identity**
+
+- Entra-joined + Intune
+- CA policy strict (compliant device, named locations)
+
+**Profile storage**
+
+- FSLogix on Azure Files Premium share (Kerberos)
+- Per-user budget tuned to workload
+
+**Networking**
+
+- Same hub-spoke pattern
+- Often paired with dedicated egress for regulated traffic flows
+
+**Image management**
+
+- Gold image, monthly refresh
+- Validation pool first
+
+**App delivery**
+
+- Per-host install in gold image (locked-down)
+- AppAttach for any shared apps
+
+**BCDR**
+
+- Same as pooled multi-session: paired-region host pool + FSLogix
+  replication
+
+</TabItem>
+</Tabs>
+
+## Decision shortcut
+
+| Question | If yes → |
+|---|---|
+| Persona installs / customises their own tools? | Personal |
+| Persona needs GPU dedicated? | Personal |
+| Persona needs audit boundary per session? | Single-session pooled |
+| Persona is knowledge worker / call centre / shift? | Pooled multi-session |
+| In doubt? | Pooled multi-session is the default |
+
+## Reuse & contribute back
+
+<Aside type="tip">
+  Hit a persona shape the three patterns don't cleanly fit? PR a new tab
+  with the variant pattern (e.g. "pooled multi-session + per-user persistent
+  data disk"). Include the decision shortcut that should route to it.
+</Aside>

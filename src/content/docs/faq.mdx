@@ -1,0 +1,165 @@
+---
+title: Frequently Asked Questions
+description: Common questions from partners during the Azure Virtual Desktop Advanced Specialization engagement.
+sidebar:
+  order: 11
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Pre-Qualification
+
+### Do we need any specific certifications to pre-qualify?
+
+Pre-qualification itself only requires the **Solutions Partner for
+Infrastructure (Azure)** designation. Certifications (AZ-140 in particular)
+are not gated at pre-qual but are evaluated within Module A.3.2 (Plan for
+Skilling) and the Module B technical depth interview. Have at least one AZ-140
+holder identified before the audit.
+
+### What counts as "Native AVD" for the customer evidence rule?
+
+A Native AVD engagement is one where the customer's primary virtual desktop
+platform is **Azure Virtual Desktop** (host pools, session hosts, AVD service
+metadata) — **not** Citrix DaaS or VMware Horizon brokered on top of Azure VMs.
+The second customer may use Citrix on Azure or Horizon on Azure.
+
+### Both our delivered engagements are Citrix on Azure — do we qualify?
+
+No. The customer evidence rule requires **at least one Native AVD**
+engagement. Plan a Native AVD engagement before requesting the audit.
+
+### How recent must the customer engagements be?
+
+Both engagements must have reached **Go-Live** within the **last 12 months**
+(the "Timeframe") at the point of audit submission.
+
+---
+
+## Audit Process
+
+### Who is the auditor?
+
+**ISSI** (Information Security Systems International, LLC) — Microsoft's
+approved auditor for this specialization.
+
+### How long does the audit take?
+
+The audit interview itself is **4 hours** (Module B only) or **8 hours**
+(Module A + B). End-to-end including prep, review, and remediation, plan
+**6–8 weeks** for a well-prepared partner.
+
+### What does it cost?
+
+**$2,400** for Module B only, **$3,600** for Module A + B combined.
+
+### Module A was passed last year — do we have to do it again?
+
+No. Module A is shared across all Solutions Partner for Infrastructure (Azure)
+specializations and is valid **2 calendar years**. Choose **Module B only**
+when you book.
+
+### What about V2.8 PREVIEW?
+
+V2.8 lands as a PREVIEW on **Jun 1, 2026**. V2.7.1 remains the active checklist
+through **Jun 30, 2026**. Audits booked in that overlap window — confirm with
+ISSI which version applies before submitting evidence.
+
+### What format does the auditor want evidence in?
+
+PDF, Word, Excel, and PowerPoint. Screenshots exported as PDF where possible.
+Name documents with control references (e.g., `B.2.1_AVD_HLD_v2.pdf`).
+
+### What happens if we fail the audit?
+
+You will receive a **remediation report** itemising specific control gaps. You
+typically have **30 days** to address findings. Failure to remediate in time
+may require restarting the audit cycle.
+
+---
+
+## Architecture & Delivery
+
+### Pooled multi-session or personal host pools?
+
+Default to **pooled multi-session** (Win 11 Enterprise multi-session) for
+knowledge workers — best cost and density. Use **personal** for developers,
+power users, GPU workloads, or app-isolation requirements. See
+[Reference Architectures](../engagement/reference-architectures/).
+
+### Azure Files or Azure NetApp Files for FSLogix?
+
+**Azure Files Premium** is the default for &lt; 1,000 users. Use **Azure
+NetApp Files** when sub-ms latency, very high IOPS, or large profile counts
+are required, or when the customer already standardises on ANF.
+
+### Entra-joined or Hybrid joined?
+
+**Entra-joined** wherever the app portfolio allows. **Hybrid join** when LOB
+apps still need on-prem AD (Kerberos / NTLM bound).
+
+### MSIX AppAttach vs Intune for app delivery?
+
+**AppAttach (MSIX)** for shared apps consumed by many users — once-attached,
+served to all session hosts. **Intune** for per-user apps. **Microsoft 365
+Apps** uses shared-computer activation.
+
+### How big should FSLogix profile containers be?
+
+Plan **30 GB** per knowledge worker as a starting budget; raise for power
+users or where OneDrive Known Folder Move stores significant content inside
+the container. Monitor container growth and document a cleanup pattern in
+your runbook.
+
+---
+
+## Engagement Delivery
+
+### How long is a typical AVD engagement?
+
+**6–10 weeks** for a greenfield Native AVD deployment: 1–2w discovery,
+1–2w design, 1–2w PoC / pilot, 2–3w production rollout, 1–2w hypercare.
+
+### Do we need IaC?
+
+Yes — **A.3.1 Repeatable Deployment** requires it. Use the published
+**Azure Virtual Desktop landing zone** Bicep modules as a starting point.
+
+### What WAF pillars do auditors focus on for AVD?
+
+For Module B.2.2, expect emphasis on **Cost** (autoscale, RIs, density),
+**Performance** (RDP Shortpath, profile storage tier, region selection), and
+**Reliability** (host pool redundancy, profile availability, BCDR pattern).
+
+### Can we anonymise customer names in evidence?
+
+Yes for internal copies. ISSI may verify customer association via Partner
+Center; coordinate with your PDM on acceptable anonymisation.
+
+---
+
+## Post-Specialization
+
+### How long is the specialization valid?
+
+- **Module A** pass: **2 calendar years**
+- **Module B** pass: **1 calendar year**
+
+Plan a Module B re-audit each year.
+
+### Where does the badge appear?
+
+On your **Microsoft AppSource profile**, **Microsoft Partner Finder**, and
+downloadable from Partner Center for use on your website and marketing
+materials.
+
+### What benefits unlock?
+
+- **Co-sell priority** for AVD opportunities
+- **Marketing through Microsoft (MtM)** eligibility for EUC workloads
+- Access to Microsoft-led GTM programmes for modern workplace
+
+<Aside>
+  Benefits change periodically. Confirm current benefits with your PDM or on
+  the [Microsoft Partner Network benefits page](https://partner.microsoft.com/en-us/partnership/partner-network/benefits).
+</Aside>

@@ -1,0 +1,153 @@
+---
+title: "HLD Template"
+description: High-Level Design template for an Azure Virtual Desktop engagement, structured to satisfy audit control B.2.1.
+sidebar:
+  label: "HLD Template"
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## When to use this
+
+After [Discovery](../../discovery-workshop/) is complete and persona-to-architecture
+mapping is agreed. The HLD is the primary evidence artefact for
+[B.2.1 Solution Design](../../../module-b/2-1-solution-design/).
+
+<Aside type="tip">
+  Image management is the most-asked-about section by auditors and by
+  customers' ops teams. Treat it as a first-class section, not a footnote.
+</Aside>
+
+## Document structure
+
+```
+1. Executive summary
+2. Business context & outcomes (link to A.1.1 strategy)
+3. Scope
+4. Personas
+5. Reference architecture selection (per persona)
+6. Host pool topology
+7. Identity design
+8. Profile storage design
+9. Networking design
+10. Image management strategy
+11. Application delivery strategy
+12. Scaling plan
+13. Monitoring & operations
+14. Security & governance
+15. BCDR pattern
+16. Sizing & cost model
+17. Risks, assumptions, dependencies
+18. Sign-off
+```
+
+## Section content prompts
+
+### 6. Host pool topology
+
+For each persona, document:
+
+- Pattern (pooled multi-session / personal / single-session pooled)
+- Why (decision rationale linking back to persona analysis)
+- OS image
+- Session host SKU and count (baseline + max with autoscale)
+- Max session limit per host
+- Load-balancing algorithm
+
+### 7. Identity design
+
+- Entra-join vs hybrid (per persona if mixed)
+- MFA enforcement
+- Conditional Access policies scoped to AVD
+- AVD admin RBAC roles and PIM eligible model
+- Privileged access workstation pattern (if applicable)
+
+### 8. Profile storage design
+
+- Azure Files Premium vs Azure NetApp Files (decision rationale)
+- Auth (AD-joined storage account, Entra Kerberos)
+- Share permissions and NTFS pattern
+- Profile container + Office container split
+- Per-user GB budget
+- Container cleanup runbook reference
+
+### 9. Networking design
+
+- VNet / subnet topology
+- Hub-spoke peering, ExpressRoute / VPN
+- RDP Shortpath for managed networks
+- Private endpoints (storage, Key Vault, Log Analytics)
+- DNS zones (private + on-prem integration)
+- Egress firewall pattern + AVD URL allow-list
+- DNS resolution for FSLogix storage
+
+### 10. Image management strategy
+
+- Source (Marketplace + customisation OR custom gold image)
+- Build pipeline (Azure Image Builder, Packer)
+- Customisation steps (M365 Apps shared-computer activation, Teams
+  AVD-optimised, FSLogix, AVD agent, base LOB apps)
+- Validation approach (validation host pool, automated test suite, sign-off)
+- Promotion (validation → production rings)
+- Refresh cadence and owner post-handover
+
+### 11. Application delivery strategy
+
+- Decision matrix per app (M365 Apps / MSIX / AppAttach / Intune / per-host
+  install / streamed)
+- AppAttach package storage and assignment
+- Per-user vs shared activation
+
+### 12. Scaling plan
+
+- Working hours profile
+- Ramp-up safety margin
+- Min / max host count
+- Force-logoff behaviour (or not) for non-working hours
+- Cost expectation per day under expected load
+
+### 13. Monitoring & operations
+
+- Log Analytics workspace
+- Diagnostic settings coverage
+- AVD Insights workbook
+- Alert rules + action groups
+- Operations review cadence
+
+### 14. Security & governance
+
+- Defender for Cloud, Policy initiatives, Conditional Access (link to A.2.1)
+- Endpoint isolation requirements (copy/paste, USB, print)
+- Data residency
+- Audit logging retention
+
+### 15. BCDR pattern
+
+- Paired-region host pool (warm / cold standby)
+- FSLogix container replication mechanism + RPO
+- Recovery procedure and RTO
+- Test cadence (link to B.4.1)
+
+### 16. Sizing & cost model
+
+- Sessions per host per persona (validated by B.4.1)
+- Host SKU per persona
+- Total hosts per persona (baseline + max)
+- RI / Savings Plan commitment plan
+- Monthly cost forecast
+
+### 17. Risks, assumptions, dependencies
+
+| ID | Type | Description | Owner | Mitigation |
+|---|---|---|---|---|
+
+### 18. Sign-off
+
+| Role | Name | Date | Signature |
+|---|---|---|---|
+| Customer business sponsor | | | |
+| Customer EUC lead | | | |
+| Customer security reviewer | | | |
+| Engagement lead (partner) | | | |
+| Technical lead (partner) | | | |

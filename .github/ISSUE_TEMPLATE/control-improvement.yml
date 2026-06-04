@@ -1,0 +1,51 @@
+name: Control improvement
+description: Propose a refinement to an audit control page (Module A or Module B)
+title: "[control] <A.x.y or B.x.y> – <short summary>"
+labels: ["innersource", "audit-evidence"]
+body:
+  - type: dropdown
+    id: control
+    attributes:
+      label: Control reference
+      description: Which audit control does this improvement target?
+      options:
+        - A.1.1 Cloud & AI Adoption Business Strategy
+        - A.1.2 Cloud & AI Adoption Plan
+        - A.2.1 Security & Governance Tooling
+        - A.2.2 Well-Architected Workloads
+        - A.3.1 Repeatable Deployment
+        - A.3.2 Plan for Skilling
+        - A.3.3 Operations Management Tooling
+        - B.1.1 Workload Assessment
+        - B.2.1 Solution Design
+        - B.2.2 Azure Well-Architected Review
+        - B.2.3 PoC or Pilot
+        - B.3.1 Deployment to Production
+        - B.4.1 Service Validation and Testing
+        - B.4.2 Post-deployment Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Gap or improvement
+      description: What is missing or unclear in the current page?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source / evidence
+      description: Engagement, auditor feedback, or scenario that prompted this. Anonymise customer details.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Blocker (audit could fail without this)
+        - Major (would cause remediation round)
+        - Minor (improves clarity / speed)
+    validations:
+      required: true

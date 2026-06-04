@@ -1,0 +1,83 @@
+---
+title: "Offering – AVD One-Pager"
+description: Productised Azure Virtual Desktop offering one-pager for partner sales and customer first conversations.
+sidebar:
+  label: "Offering One-Pager"
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## When to use this
+
+Drop into a customer first meeting (any conversation about workforce
+flexibility, RDS refresh, Citrix / Horizon cost review, M&amp;A integration,
+regulated industry remote access, or "we need a modern desktop").
+
+## The offering at a glance
+
+| | |
+|---|---|
+| **Outcome** | A production Azure Virtual Desktop service serving N user personas, with operations handover, runbooks, and 2–4 weeks hypercare. |
+| **Engagement length** | 6–10 weeks typical (1–2w discover, 1–2w design, 1–2w PoC / Pilot, 2–3w production, 1–2w hypercare). |
+| **Customer commitment** | Business sponsor, EUC technical lead, identity admin, security reviewer, 2–3 pilot user reps. |
+| **What we bring** | AZ-140 certified consultants, AVD landing zone IaC, gold image pipeline, FSLogix patterns, runbooks, KT pack. |
+| **What you get** | Native AVD production environment + WAF assessment + LLD + runbook + KT + hypercare + skilling plan. |
+
+## Customer value propositions
+
+- **Cost** — predictable per-user economics, autoscale + RIs eliminate idle
+  capacity, retire legacy VDI / RDS estate
+- **Workforce flexibility** — same desktop on any device, anywhere, BYOD
+  compatible, M&amp;A integration accelerator
+- **Security** — Entra-joined + Intune + Conditional Access + Defender; data
+  stays in the cloud, never on endpoints
+- **Performance** — RDP Shortpath, regional placement, multi-session density
+  tuned per persona
+- **Operations** — Azure Monitor + AVD Insights + alerts + runbook for the
+  customer's ops team
+
+## Target customer profile
+
+This offering is the strongest fit when **at least 2** apply:
+
+- Retiring RDS / Windows Server RDSH
+- Reviewing a Citrix / Horizon contract or cost overhead
+- Workforce went hybrid and IT can't ship laptops fast enough
+- Regulated industry needing audit-grade endpoint isolation
+- M&amp;A integration: need to provision desktops for an acquired company
+  next month, not next quarter
+- Power user / GPU workload needing centralised compute
+
+## Engagement phases
+
+| Phase | Duration | Outputs |
+|---|---|---|
+| 1. Qualification | 1 call | [Qualification questionnaire](../qualification-questionnaire/) completed |
+| 2. Discovery | 1–2w | [Discovery workshop](../discovery-workshop/) outputs: personas, apps, image, identity, network |
+| 3. Design | 1–2w | [HLD](../deliverables/hld-template/) + WAF review + cost model |
+| 4. PoC / Pilot | 1–2w | Pilot in production region with N pilot users |
+| 5. Production rollout | 2–3w | Wave-based rollout, IaC pipeline, Go-Live |
+| 6. Hypercare + handover | 1–2w | [Runbook](../deliverables/runbook-template/), [KT plan](../deliverables/kt-plan-template/), [hypercare](../deliverables/hypercare-plan-template/), [DoD](../definition-of-done/) sign-off |
+
+## Reusable assets we ship in every engagement
+
+- AVD landing zone Bicep modules (parameter-driven)
+- Gold image pipeline (Azure Image Builder)
+- FSLogix on Azure Files Premium pattern (Kerberos)
+- Three reference architectures: [single-session, multi-session, personal](../reference-architectures/)
+- HLD / LLD / runbook / KT / hypercare templates
+- Customer skilling plan (AZ-140 mapped)
+
+<Aside type="tip">
+  Pair this one-pager with one [reference architecture](../reference-architectures/)
+  diagram on slide 2 of your customer pitch — the architecture image
+  dramatically increases meeting-to-discovery conversion.
+</Aside>
+
+## Reuse & contribute back
+
+<Aside type="tip">
+  Refined the value props after a real engagement? Open a PR against this
+  page using the [Template Improvement](https://github.com/) issue template.
+</Aside>

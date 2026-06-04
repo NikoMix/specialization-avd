@@ -1,0 +1,172 @@
+---
+title: Audit Process
+description: End-to-end walkthrough of the Azure Virtual Desktop Advanced Specialization third-party remote audit conducted by ISSI (V2.7.1).
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Overview
+
+The Advanced Specialization audit is conducted by **ISSI (Information Security
+Systems International, LLC)** — the Microsoft-approved auditor for this
+specialization. The audit is performed remotely (video call + document review).
+
+| Scope | Duration | Price |
+|---|---|---|
+| **Module B only** | 4 hours | **$2,400** |
+| **Module A + Module B** | 8 hours | **$3,600** |
+
+| Pass | Validity |
+|---|---|
+| Module A | **2 calendar years** |
+| Module B | **1 calendar year** |
+
+<Aside type="tip">
+  Module A is shared across all Solutions Partner Infrastructure (Azure)
+  specializations. If you have passed Module A within the last 2 years for
+  another specialization (AKS, SAP, Hybrid Cloud, Networking, AVS, etc.),
+  choose **Module B only** to save 4 hours and $1,200.
+</Aside>
+
+<Aside type="caution">
+  **Version transition window:** V2.7.1 is the active checklist through
+  **Jun 30, 2026**. **V2.8 PREVIEW** lands **Jun 1, 2026**. If your audit
+  is booked between Jun 1 and Jun 30, 2026, confirm with ISSI which version
+  applies before submitting evidence.
+</Aside>
+
+---
+
+## Audit Phases
+
+<Steps>
+
+1. ### Pre-Qualification Confirmation
+
+   Before requesting the audit, confirm you meet the
+   [pre-qualification requirements](../requirements/):
+
+   - Active Solutions Partner for Infrastructure (Azure)
+   - 2 qualifying customers in the last 12 months (≥1 Native AVD)
+   - Recommended certifications mapped to your team
+
+2. ### Audit Request via Partner Center
+
+   Navigate to **Partner Center → Benefits → Advanced Specializations** and
+   request the audit for _Azure Virtual Desktop_.
+
+   You will be asked to select your audit scope (Module B only vs Module A + B).
+
+3. ### Kickoff Call with ISSI
+
+   Expect a 30–60 minute kickoff covering:
+
+   - Audit process, timeline, and evidence submission format
+   - Confirmation of audit scope and the 2 customer engagements you will use
+     as evidence
+   - Deadline for evidence submission
+
+   **Bring:** project lead, technical / EUC lead, and (for Module A) the
+   compliance / operations lead.
+
+4. ### Evidence Collection & Submission
+
+   Use the [Evidence Tracker](../evidence-tracker/) to manage collection
+   across all controls.
+
+   <Tabs>
+     <TabItem label="Module A – Azure Essentials">
+       | Control | Key Evidence |
+       |---|---|
+       | [A.1.1 Cloud & AI Adoption Business Strategy](../module-a/1-1-cloud-ai-adoption-business-strategy/) | Customer-signed strategy linking AVD to business outcomes |
+       | [A.1.2 Cloud & AI Adoption Plan](../module-a/1-2-cloud-ai-adoption-plan/) | Wave plan / roadmap with AVD sequenced |
+       | [A.2.1 Security & Governance Tooling](../module-a/2-1-security-governance-tooling/) | Defender for Cloud, Policy, Entra CA |
+       | [A.2.2 Well-Architected Workloads](../module-a/2-2-well-architected-workloads/) | WAF assessment for an AVD workload |
+       | [A.3.1 Repeatable Deployment](../module-a/3-1-repeatable-deployment/) | IaC for landing zone + host pool |
+       | [A.3.2 Plan for Skilling](../module-a/3-2-plan-for-skilling/) | AZ-140 skilling plan for the customer ops team |
+       | [A.3.3 Operations Management Tooling](../module-a/3-3-operations-management-tooling/) | Azure Monitor + AVD Insights workbook |
+     </TabItem>
+     <TabItem label="Module B – AVD Workload">
+       | Control | Key Evidence |
+       |---|---|
+       | [B.1.1 Workload Assessment](../module-b/1-1-workload-assessment/) | User persona inventory, app inventory, image strategy |
+       | [B.2.1 Solution Design](../module-b/2-1-solution-design/) | HLD: host pool, identity, profiles, networking, image mgmt |
+       | [B.2.2 Azure Well-Architected Review](../module-b/2-2-azure-well-architected-review/) | WAF review focused on Cost + Performance + Reliability |
+       | [B.2.3 PoC or Pilot](../module-b/2-3-poc-or-pilot/) | Scope, success criteria, results, customer sign-off |
+       | [B.3.1 Deployment to Production](../module-b/3-1-deployment-to-production/) | IaC pipeline runs, config baseline, Go-Live record |
+       | [B.4.1 Service Validation and Testing](../module-b/4-1-service-validation-and-testing/) | Logon perf, app launch, scaling, failover, profile integrity |
+       | [B.4.2 Post-deployment Documentation](../module-b/4-2-post-deployment-documentation/) | LLD, runbook, KT plan, hypercare plan, customer sign-off |
+     </TabItem>
+   </Tabs>
+
+5. ### Auditor Review
+
+   ISSI reviews your evidence against the V2.7.1 checklist and may request
+   clarifications. Typical review duration: **5–10 business days**.
+
+   - Respond to queries promptly (target &lt; 2 business days)
+   - Assign a single point of contact
+   - Keep evidence version-controlled (dated filenames)
+
+6. ### Audit Interview
+
+   The audit itself is **4 hours** (Module B only) or **8 hours** (Module A + B),
+   conducted as a video call. The auditor walks through:
+
+   - Each control with you and your team
+   - The 2 customer engagements end-to-end
+   - Sample evidence artefacts (HLD, runbook, sign-off, etc.)
+
+7. ### Remediation (if applicable)
+
+   If gaps are identified, ISSI provides a **remediation report**.
+
+   <Aside type="caution">
+     You typically have **30 days** to address remediation findings. Treat
+     this as a priority — delays can require restarting the audit cycle.
+   </Aside>
+
+8. ### Audit Pass & Specialization Award
+
+   Once ISSI confirms a pass, Microsoft Partner Center is updated within
+   **10–15 business days**.
+
+   **Next steps after passing:**
+   - Download the specialization badge from Partner Center
+   - Update marketing materials and website
+   - Notify your PDM to unlock co-sell and marketing benefits
+   - Diary the renewal:
+     - Module A — re-audit within **2 years**
+     - Module B — re-audit within **1 calendar year**
+
+</Steps>
+
+---
+
+## Timeline Summary
+
+| Phase | Typical Duration |
+|---|---|
+| Pre-qualification confirmation | 1–2 weeks |
+| Audit request to ISSI assignment | 5–10 business days |
+| Evidence collection (prepared) | 1–2 weeks |
+| Evidence collection (unprepared) | 4–8 weeks |
+| Audit interview itself | 4h (B only) / 8h (A + B) |
+| ISSI review | 5–10 business days |
+| Remediation (if needed) | Up to 30 days |
+| Specialization badge publication | 10–15 business days |
+| **Total (well-prepared partner)** | **~6–8 weeks** |
+
+---
+
+## Key Contacts
+
+| Role | Responsibility |
+|---|---|
+| **Microsoft PDM** | Pre-qualification confirmation, designation queries |
+| **ISSI** | Evidence submission, audit scheduling, remediation |
+| **Internal engagement lead** | Evidence collection coordination |
+| **AVD / EUC technical lead** | Module B technical evidence, audit interview |
+| **Compliance / operations lead** | Module A evidence (if scope includes A) |

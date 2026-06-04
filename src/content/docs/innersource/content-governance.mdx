@@ -1,0 +1,62 @@
+---
+title: "Innersource – Content Governance"
+description: Lifecycle and ownership model for content in the AVD specialization repository (Draft → Reviewed → Endorsed → Deprecated).
+sidebar:
+  label: "Content Governance"
+  order: 2
+---
+
+## Lifecycle
+
+Every content page in this repository moves through these stages:
+
+| Stage | Meaning | Marked how |
+|---|---|---|
+| **Draft** | Page exists, may be incomplete, has not been peer-reviewed | New page default |
+| **Reviewed** | Peer-reviewed by another AVD consultant in the practice | PR approved + merged |
+| **Endorsed** | Approved by the practice lead listed in CODEOWNERS for that area | Practice lead approval on a PR |
+| **Deprecated** | No longer recommended; kept for reference | Banner at top of page + sidebar order pushed down |
+
+## Ownership
+
+See [CODEOWNERS](https://github.com/) for the per-area practice lead. The
+practice lead is responsible for:
+
+- Endorsing content in their area
+- Reviewing PRs within the review SLA
+- Quarterly content review (see Roadmap)
+- Decisions on deprecation
+- Coordinating major content refreshes (e.g. V2.7.1 → V2.8 transition)
+
+## Quarterly content review
+
+Once per quarter the practice lead for each area runs a content review:
+
+1. Confirm all content reflects current AVD service capabilities
+2. Confirm all control pages map to the active audit checklist version
+3. Identify any pages that should be deprecated
+4. Identify any gaps from recent engagements that have not yet been PR'd
+5. Update the [Roadmap](../roadmap/) with prioritised work
+
+## Major content refreshes
+
+When the audit checklist version changes (V2.7.1 → V2.8 PREVIEW from
+Jun 1, 2026):
+
+1. Branch from `main`
+2. Create new control pages for any added controls
+3. Update existing control pages where wording / evidence requirements
+   changed
+4. Update `.github/scripts/create-issues.sh` so issue checklists stay
+   aligned
+5. Tag old pages with a Deprecated banner if the corresponding control no
+   longer exists
+6. Open a PR for practice lead endorsement
+7. Update `audit-process.mdx` with the active version
+
+## Customer anonymisation rule
+
+Real customer names, revenue figures, identifiable architectural details
+(specific VNet names, specific subscription IDs, identifying capacity
+numbers) **must not** appear in this repository. Use `Customer A`,
+`Customer B`, etc. in case studies and examples.

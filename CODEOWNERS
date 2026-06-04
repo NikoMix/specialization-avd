@@ -1,0 +1,32 @@
+# CODEOWNERS — practice leads per content area
+#
+# Replace @your-org/practice-lead-* with real GitHub teams or individuals
+# once the repo is forked into your organisation.
+
+# Default — overall practice lead
+*                                              @your-org/practice-lead-avd
+
+# Audit controls — owned by the audit / compliance lead
+/src/content/docs/module-a/                    @your-org/practice-lead-audit
+/src/content/docs/module-b/                    @your-org/practice-lead-audit
+/src/content/docs/requirements.mdx             @your-org/practice-lead-audit
+/src/content/docs/audit-process.mdx            @your-org/practice-lead-audit
+/src/content/docs/evidence-tracker.mdx         @your-org/practice-lead-audit
+
+# Engagement playbook — owned by the AVD delivery lead
+/src/content/docs/engagement/                  @your-org/practice-lead-avd
+
+# Innersource governance — owned by the enablement lead
+/src/content/docs/innersource/                 @your-org/practice-lead-enablement
+/CONTRIBUTING.md                               @your-org/practice-lead-enablement
+/CODEOWNERS                                    @your-org/practice-lead-enablement
+
+# Engagement agent + memories — owned by the AI tooling lead
+/.github/agents/                               @your-org/practice-lead-ai-tooling
+/.github/memories/                             @your-org/practice-lead-ai-tooling
+
+# CI / automation — owned by platform engineering
+/.github/workflows/                            @your-org/platform-engineering
+/.github/scripts/                              @your-org/platform-engineering
+/astro.config.mjs                              @your-org/platform-engineering
+/package.json                                  @your-org/platform-engineering

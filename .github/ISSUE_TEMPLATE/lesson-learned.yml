@@ -1,0 +1,41 @@
+name: Lesson learned
+description: Capture a lesson from a customer AVD engagement that other consultants should know
+title: "[lesson] <short summary>"
+labels: ["innersource", "lesson-learned"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Engagement phase
+      options:
+        - Selling / qualification
+        - Discovery
+        - Solution design
+        - PoC / Pilot
+        - Production deployment
+        - Validation / testing
+        - Hypercare
+        - Audit
+    validations:
+      required: true
+  - type: textarea
+    id: situation
+    attributes:
+      label: Situation
+      description: What was the customer scenario? Anonymise customer name, sector, headcount only.
+    validations:
+      required: true
+  - type: textarea
+    id: lesson
+    attributes:
+      label: Lesson
+      description: What would you do differently next time?
+    validations:
+      required: true
+  - type: textarea
+    id: artefact
+    attributes:
+      label: Suggested doc / template / control update
+      description: Which page or template should be updated to bake this in? Link if you know.
+    validations:
+      required: false
