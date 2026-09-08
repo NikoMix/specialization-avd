@@ -1,0 +1,96 @@
++++
+title = 'B.2.2 – Azure Well-Architected Review'
+linkTitle = '2.2 Azure Well-Architected Review'
+description = 'Evidence requirements for control B.2.2 – an AVD-specific WAF review with explicit focus on Cost, Performance, and Reliability.'
+weight = 30
+toc = true
+modules = ['Module B']
++++
+
+## What the Auditor Checks
+
+The auditor verifies that an **Azure Well-Architected Review** was conducted
+for the AVD workload, with explicit attention to **Cost Optimization**,
+**Performance Efficiency**, and **Reliability** — the three pillars where AVD
+delivery most commonly underperforms.
+
+This control is closely related to [A.2.2 Well-Architected
+Workloads](/docs/module-a/2-2-well-architected-workloads) but is **AVD-specific**:
+the review must be against the AVD workload lens.
+
+**Typical questions:**
+- Where is the AVD WAF review output?
+- Walk me through the Cost / Performance / Reliability findings.
+- What was actioned, what was accepted with rationale?
+
+---
+
+## Required Evidence Checklist
+
+| # | Evidence Item | Accepted Formats | Status |
+|---|---|---|---|
+| 1 | **AVD WAF review output** (Azure Well-Architected Review tool with AVD lens) | PDF | ⬜ |
+| 2 | **Cost findings + decisions** (scaling plan, RIs / Savings Plans, SKU right-sizing, profile container budget) | PDF, Excel | ⬜ |
+| 3 | **Performance findings + decisions** (RDP Shortpath, region, storage tier, logon time targets) | PDF, Excel | ⬜ |
+| 4 | **Reliability findings + decisions** (ring-based updates, BCDR pattern, profile availability) | PDF, Excel | ⬜ |
+| 5 | **Workshop minutes** — customer-facing, attendee list, decisions taken | PDF, Word | ⬜ |
+| 6 | **Recommendation register** (accept / action / backlog / decline-with-rationale) | Excel | ⬜ |
+
+{{% alert type="tip" %}}
+See the engagement playbook page
+[WAF Assessment](/docs/engagement/waf-assessment) for the AVD-specific
+question set and recommended lever order.
+{{% /alert %}}
+
+---
+
+## Evidence Guidance
+
+### Cost levers (in priority order)
+
+1. **Scaling plan** for pooled host pools (single biggest lever)
+2. **Reserved Instances / Savings Plans** for baseline session host capacity
+3. **Right-size session host SKU** per persona density
+4. **FSLogix profile container budget** (per-user GB cap, cleanup runbook)
+5. **Marketplace vs custom image** trade-off (custom image build cost vs
+   patch agility)
+
+### Performance levers
+
+1. **RDP Shortpath for managed networks** enabled
+2. **Region selection** for proximity to users
+3. **Profile storage tier** — Premium Azure Files / ANF for logon perf
+4. **Image hygiene** — pre-staged Office, Teams optimisation, removed bloat
+5. **Multi-session density** validated under realistic load (B.4.1)
+
+### Reliability levers
+
+1. **Ring-based update strategy** — Validation host pool → Production
+2. **Paired-region BCDR** host pool + FSLogix replication (ZRS / GRS / cross-region)
+3. **Availability Zones** for session hosts where supported
+4. **Scaling plan ramp-up safety margin** to absorb host failures
+5. **AVD service-side outage runbook** — what to tell users, fallback paths
+
+---
+
+## Evidence Status
+
+| Evidence Item | Owner | Due Date | Status | Notes |
+|---|---|---|---|---|
+| AVD WAF review output | | | ⬜ | |
+| Cost findings + decisions | | | ⬜ | |
+| Performance findings + decisions | | | ⬜ | |
+| Reliability findings + decisions | | | ⬜ | |
+| Workshop minutes | | | ⬜ | |
+| Recommendation register | | | ⬜ | |
+
+---
+
+## Common Gaps
+
+| Gap | Remediation |
+|---|---|
+| WAF was generic Azure, not AVD-specific | Re-run with the AVD workload lens; export and replace the PDF |
+| No scaling plan on a pooled host pool | Deploy a scaling plan and capture before/after cost telemetry |
+| No BCDR pattern documented | Define and document a paired-region pattern even if not yet activated |
+| Cost recommendations exist but no decisions | Walk register with customer; capture accept / decline outcomes |

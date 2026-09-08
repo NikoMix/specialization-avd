@@ -1,0 +1,70 @@
++++
+title = 'Definition of Done'
+linkTitle = 'Definition of Done'
+description = 'Engagement-level Definition of Done for an Azure Virtual Desktop production delivery.'
+weight = 70
+toc = true
++++
+
+{{% alert type="tip" title="Download the workfile" %}}
+{{< download href="/templates/engagement/definition-of-done.docx" >}}Definition of Done checklist (DOCX){{< /download >}}
+{{% /alert %}}
+
+## Purpose
+
+A single, customer-shared checklist that defines when an AVD engagement is
+**done** — used to drive Go-Live decision, hypercare exit, and audit
+evidence completeness.
+
+{{% alert type="tip" %}}
+Share this checklist with the customer at the **start** of the engagement,
+not the end. It anchors expectations and prevents scope creep.
+{{% /alert %}}
+
+## Pre-Go-Live
+
+- [ ] [A.1.1] Cloud & AI Adoption Business Strategy signed by customer
+      sponsor
+- [ ] [A.1.2] Adoption plan / wave plan agreed and tracked
+- [ ] [A.2.1] Security & governance tooling active on AVD subscription
+- [ ] [A.2.2 + B.2.2] WAF review complete; register triaged
+- [ ] [A.3.1] IaC pipeline used for the production deployment
+- [ ] [B.1.1] Workload assessment signed off (personas, apps, image)
+- [ ] [B.2.1] HLD signed by customer
+- [ ] [B.2.3] PoC / Pilot results signed off with decision-to-proceed
+- [ ] [B.3.1] Cutover plan agreed (for migrations)
+- [ ] [B.4.1] Test plan executed; results within targets
+
+## Go-Live
+
+- [ ] [B.3.1] Production pipeline run completed successfully
+- [ ] [B.3.1] Configuration baseline captured
+- [ ] [B.3.1] Go-Live record signed
+- [ ] Communication sent to users
+- [ ] Hypercare started
+
+## Hypercare exit
+
+- [ ] All P1 / P2 incidents resolved
+- [ ] Incident rate &lt; 1 / user / week (rolling 7d)
+- [ ] Logon time P95 within HLD target
+- [ ] Customer ops team confidence ≥ 4/5
+- [ ] Runbook validated against real incidents
+
+## Handover
+
+- [ ] [B.4.2] LLD delivered
+- [ ] [B.4.2] Runbook delivered and walked through
+- [ ] [A.3.2 + B.4.2] KT plan completed; KT completion form signed
+- [ ] [B.4.2] Hypercare plan exit criteria met and signed
+- [ ] [A.3.3] Operations management tooling demonstrated to ops team
+- [ ] All evidence filed in the engagement evidence tracker
+- [ ] Lessons learned filed against this repo (innersource)
+
+## Audit readiness
+
+- [ ] All Module B evidence collected for this customer engagement
+- [ ] Customer added to the [Evidence Tracker](/docs/evidence-tracker)
+- [ ] Customer Case Study + Customer Sign-Off captured
+- [ ] (If applicable) ready for use as one of the 2 qualifying customers
+      for the audit

@@ -1,0 +1,25 @@
+{{- /*
+  Download link for a workfile in `static/`.
+
+  Usage
+    {{< download href="/templates/engagement/waf-assessment.xlsx" >}}WAF workbook (XLSX){{< /download >}}
+
+  Why not the theme's `button` shortcode: it emits a multi-line <a> tag whose
+  `rel`/`target` line is empty for internal links. A blank line inside the tag
+  terminates the surrounding Markdown paragraph, so the anchor is mangled the
+  moment it appears inside an `alert` (or any other Markdown context). This
+  emits a single-line anchor instead.
+
+  `relURL` is what makes the href survive the `/<repo>/` sub-path that GitHub
+  Pages serves a project site from — a plain Markdown link would not.
+*/ -}}
+{{- $href := .Get "href" | default (.Get 0) -}}
+{{- if not $href -}}
+  {{- errorf "download: href is required (in %s)" .Page.Path -}}
+{{- end -}}
+{{- $label := trim (.Inner | default (.Get "label") | default $href) " \n" -}}
+{{- $icon := .Get "icon" | default "document" -}}
+{{- /* `relURL` returns a leading-slash path unchanged, so the site sub-path
+       would be dropped. Trim the slash so the base path is prepended. */ -}}
+{{- $url := cond (hasPrefix $href "http") $href (strings.TrimPrefix "/" $href | relURL) -}}
+<a class="button button-outline" href="{{ $url }}" download>{{ partial "utils/icon.html" (dict "name" $icon "size" 16) }}<span>{{ $label }}</span></a>

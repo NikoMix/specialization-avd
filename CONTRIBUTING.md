@@ -8,11 +8,11 @@ improvements back to it.
 
 | You did this | Open this |
 |---|---|
-| Found a missing evidence item the auditor asked for | PR against `src/content/docs/module-a/` or `module-b/` + issue with `audit-evidence` label |
+| Found a missing evidence item the auditor asked for | PR against `content/docs/module-a/` or `module-b/` + issue with `audit-evidence` label |
 | Discovered a faster way to gather an existing evidence item | PR against the relevant control page |
-| Improved a customer deliverable template after using it | PR against `src/content/docs/engagement/deliverables/` |
-| Hit a customer scenario the qualification questionnaire didn't cover | PR against `qualification-questionnaire.mdx` |
-| Identified a new reference architecture variant | PR against `reference-architectures.mdx` + an ADR-style write-up |
+| Improved a customer deliverable template after using it | PR against `content/docs/engagement/deliverables/` |
+| Hit a customer scenario the qualification questionnaire didn't cover | PR against `qualification-questionnaire.md` |
+| Identified a new reference architecture variant | PR against `reference-architectures.md` + an ADR-style write-up |
 | Anything you wish you'd known on day 1 | Issue using the **Lesson Learned** template |
 
 ## Branching
@@ -36,10 +36,27 @@ A good PR explains:
 
 1. The engagement phase / control number it maps to
 2. The customer scenario that prompted the change
-3. Whether it changes evidence requirements (if so, update
-   `.github/scripts/create-issues.sh` so issue checklists stay aligned)
-4. Whether MDX syntax rules (see `.github/memories/mdx-content.md`) were
-   followed (escape `<` before letter/digit/space → `&lt;`)
+3. Whether it changes evidence requirements — the `Create Audit Engagement
+   Issues` workflow generates its checkboxes straight from the
+   `## Required Evidence Checklist` table, so a doc edit is the only edit
+   needed
+4. Whether the content rules (see `.github/memories/hugo-content.md`) were
+   followed
+
+## Local build
+
+```bash
+git submodule update --init --recursive   # first time only
+hugo server
+```
+
+Requires the **extended** edition of Hugo, v0.146.0 or newer. Before opening a
+PR, run a production build and the table gate that CI enforces:
+
+```bash
+hugo --gc --minify
+python3 scripts/verify-tables.py
+```
 
 ## Content lifecycle
 
@@ -50,7 +67,7 @@ A good PR explains:
 | **Endorsed** | Approved by the practice lead listed in CODEOWNERS |
 | **Deprecated** | No longer recommended; kept for reference |
 
-See [`src/content/docs/innersource/content-governance.mdx`](src/content/docs/innersource/content-governance.mdx).
+See [`content/docs/innersource/content-governance.md`](content/docs/innersource/content-governance.md).
 
 ## Code of conduct
 

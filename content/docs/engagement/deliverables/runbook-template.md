@@ -1,0 +1,100 @@
++++
+title = 'Runbook Template'
+linkTitle = 'Runbook Template'
+description = 'Operational runbook template covering image refresh, scaling, FSLogix, user onboarding, common incidents, patching, and BCDR.'
+weight = 30
+toc = true
++++
+
+{{% alert type="tip" title="Download the workfile" %}}
+{{< download href="/templates/deliverables/runbook-template.docx" >}}Runbook template (DOCX){{< /download >}}
+{{% /alert %}}
+
+## When to use this
+
+Hand to the customer ops team at handover. Primary evidence artefact for
+[B.4.2 Post-deployment Documentation](/docs/module-b/4-2-post-deployment-documentation).
+
+{{% alert type="tip" %}}
+The single most-asked-for runbook procedure during real incidents is
+**FSLogix profile container reset / repair**. Treat it as a first-class
+procedure with its own page in the runbook.
+{{% /alert %}}
+
+## Runbook structure
+
+### 1. Image refresh
+
+- Trigger: monthly cadence + emergency patch
+- Steps to build a new image via Azure Image Builder
+- Validation host pool deployment
+- Sign-off criteria before promotion
+- Production rollout procedure (ring-based)
+- Rollback procedure if a regression appears in production
+
+### 2. Scaling
+
+- How to view current scaling plan behaviour
+- How to adjust min / max host count
+- How to add or remove a schedule
+- Troubleshooting unexpected scale-up or scale-down
+- Cost impact of common changes
+
+### 3. FSLogix
+
+- **Profile container reset** for a single user (most common incident)
+- **Profile container repair** for corruption
+- **Share permissions audit**
+- **Container growth review** and per-user cleanup
+- **Office container split** verification
+
+### 4. User onboarding / offboarding
+
+- Add user to AVD Entra group
+- Pre-stage profile container (optional)
+- Leaver process: profile container archive / removal
+
+### 5. Common incidents
+
+| Incident | Symptom | Diagnostic step | Resolution |
+|---|---|---|---|
+| Connection failure | "Cannot connect to AVD" | Check AVD Insights → Connection Diagnostics | Token issue / host unhealthy / network egress |
+| Slow logon | Logon &gt; 60s | Check FSLogix logs, Profile container size, storage IOPS | Tier upgrade / cleanup / share perms |
+| App launch failure | App won't open | Check AppAttach assignment / Intune app status / M365 activation | Reattach / reassign / re-license |
+| Print failure | Printer doesn't appear | Check Universal Print / redirection policy | Re-enroll printer / GPO check |
+| Peripheral redirection | USB device missing | Check RDP redirection policy in host pool | Adjust RDP property |
+
+### 6. Patching
+
+- Ring-based update flow (Validation pool → Production pool)
+- Windows Update for Business / WSUS / Intune Update Rings
+- Image vs. live patching trade-off
+- Out-of-band emergency patch procedure
+
+### 7. BCDR
+
+- How to fail over to the paired-region host pool
+- How to fail back after a region recovery
+- FSLogix container replication status check
+- User communication template during failover
+
+### 8. Backup / restore
+
+- What is backed up (FSLogix containers, IaC state, customisations,
+  AppAttach packages)
+- What is NOT backed up (session host VMs are stateless)
+- RTO / RPO commitments
+- Restore procedure for FSLogix container, image gallery, host pool config
+
+### 9. Cost monitoring
+
+- Where to view monthly cost (Cost Management)
+- Anomaly alerting setup
+- Common cost drivers and levers (link to WAF assessment)
+
+### 10. Escalation
+
+- L1 / L2 / L3 ownership
+- Microsoft support engagement steps
+- Vendor escalation (AppAttach packagers, Citrix-on-Azure support if
+  applicable)

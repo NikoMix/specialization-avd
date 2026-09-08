@@ -21,10 +21,11 @@
 
 ## Checks
 
-- [ ] MDX rules followed (`<` before letter/digit/space escaped as `&lt;`; no dots in filenames)
-- [ ] If evidence items changed in a control page, `.github/scripts/create-issues.sh` was updated to match
+- [ ] Markdown tables start at column 0 (never indented inside a list item or shortcode)
+- [ ] Evidence checklist edits are made in the control page only — the issues workflow reads it directly
 - [ ] No real customer names, revenue figures, or identifiable system details
-- [ ] `npm run build` passes locally
+- [ ] `hugo --gc --minify` passes locally
+- [ ] `python3 scripts/verify-tables.py` passes locally
 - [ ] Content lifecycle stage noted (Draft / Reviewed / Endorsed)
 
 ## Reviewer notes

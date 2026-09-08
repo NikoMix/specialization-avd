@@ -12,16 +12,19 @@ pass and into production hypercare** for Azure Virtual Desktop.
 
 It contains:
 
-- **Documentation site** (Astro 6 + Starlight 0.39) covering every audit control,
-  evidence requirement, and common gap for Module A (Azure Essentials) + Module B
-  (AVD workload)
+- **Documentation site** (Hugo + the
+  [`NikoMix/ms-hugo-theme`](https://github.com/NikoMix/ms-hugo-theme) template)
+  covering every audit control, evidence requirement, and common gap for
+  Module A (Azure Essentials) + Module B (AVD workload)
 - **Engagement playbook** — offering one-pager, qualification questionnaire,
   discovery workshop kit, WAF assessment, MAP / RDS-to-AVD assessment inputs,
-  three reference architectures (single-session, multi-session, personal host
-  pool), customer deliverable templates (HLD, LLD, runbook, KT, hypercare)
+  the Microsoft AVD landing zone reference architecture plus three host pool
+  patterns (pooled multi-session, personal, single-session), customer
+  deliverable templates (HLD, LLD, runbook, KT, hypercare)
 - **Innersource governance** — CONTRIBUTING, CODEOWNERS, issue / PR templates,
   content governance lifecycle
-- **GitHub Issues automation** — one issue per audit control, recreated annually
+- **GitHub Issues automation** — one issue per audit requirement, generated
+  from the control pages themselves, recreated annually
 - **Engagement Agent** — purpose-built Copilot agent that knows every AVD
   control and consulting workflow
 
@@ -50,25 +53,29 @@ This repo is a **GitHub Template**. Click **"Use this template"** (not Fork) to 
 
 **Use this template → Create a new repository** and choose your GitHub organisation.
 
-### 2. Set your site URL
-
-`astro.config.mjs` derives `site` and `base` from `GITHUB_REPOSITORY` automatically.
-Override only if you need a custom URL by setting repository variables:
-
-- `ASTRO_SITE` = `https://YOUR_ORG.github.io/YOUR_REPO_NAME`
-- `ASTRO_GITHUB_URL` = `https://github.com/YOUR_ORG/YOUR_REPO_NAME` (optional)
-
-### 3. Enable GitHub Pages
+### 2. Enable GitHub Pages
 
 **Settings → Pages → Source → GitHub Actions**
 
-### 4. Create engagement issues
+The build takes its `baseURL` from `actions/configure-pages`, so a fresh copy of
+the template publishes at the right sub-path with no config edit. Override
+`baseURL` in `config/_default/hugo.toml` only if you serve the site from a
+custom domain.
+
+Also update `params.page.editUrl` in `config/_default/params.toml` to point at
+your own repository, so the "Edit this page" links work.
+
+### 3. Create engagement issues
 
 **Actions → Create Audit Engagement Issues → Run workflow**
 
-This creates labelled issues + a milestone for the current audit cycle.
+This creates labelled issues + a milestone for the current audit cycle, one per
+control, with every requirement from that control's evidence checklist as a
+checkbox. Choose the `requirement` granularity to additionally get one issue per
+individual Module B evidence item, and tick `dry_run` first if you want to see
+what it would create.
 
-### 5. Done
+### 4. Done
 
 - Issues appear as your engagement task board 📋
 - The documentation site deploys automatically on push to `main` 🌐
@@ -107,24 +114,50 @@ Infrastructure (Azure) specializations — evidence is reusable.
 Every consultant who runs an AVD engagement is expected to contribute back:
 
 - Missing controls, evidence formats, or templates → PR against
-  `src/content/docs/module-*` or `src/content/docs/engagement/`
+  `content/docs/module-*` or `content/docs/engagement/`
 - Lessons learned → issue using the `lesson-learned` template
 - Reference architecture refresh → PR against
-  `src/content/docs/engagement/reference-architectures.mdx`
+  `content/docs/engagement/reference-architectures.md`
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) and the
-[Content Governance](src/content/docs/innersource/content-governance.mdx) page.
+[Content Governance](content/docs/innersource/content-governance.md) page.
 
 ---
 
 ## 🖥️ Local Development
 
 ```bash
-npm install
-npm run dev
+git submodule update --init --recursive
+hugo server
 ```
 
-Requires **Node 24** (matches CI).
+Requires the **extended** edition of [Hugo](https://gohugo.io/), **v0.146.0 or
+newer** (CI pins v0.165.0). Nothing else — no Node, no Go, no Dart Sass.
+
+Before opening a PR, run what CI runs:
+
+```bash
+hugo --gc --minify
+python3 scripts/verify-tables.py
+```
+
+### About the theme
+
+The site is rendered by the remote template
+[`NikoMix/ms-hugo-theme`](https://github.com/NikoMix/ms-hugo-theme), pinned as a
+git submodule at `themes/ms-hugo-theme` and checked out by the deploy workflow
+with `submodules: recursive`.
+
+It is deliberately **not** wired up as a Hugo Module. Go's module packer strips
+every directory named `vendor`, which drops the theme's
+`assets/scss/vendor/_chroma.scss` from the module cache and fails the Sass build
+with `File to import not found or unreadable: vendor/chroma`. To bump the theme:
+
+```bash
+git -C themes/ms-hugo-theme fetch --depth 1 origin main
+git -C themes/ms-hugo-theme checkout FETCH_HEAD
+git add themes/ms-hugo-theme && git commit -m "Bump ms-hugo-theme"
+```
 
 ---
 
@@ -133,18 +166,26 @@ Requires **Node 24** (matches CI).
 ```
 ├── .github/
 │   ├── agents/engagement-agent.agent.md
-│   ├── memories/mdx-content.md
+│   ├── memories/hugo-content.md
 │   ├── ISSUE_TEMPLATE/*.yml
 │   ├── PULL_REQUEST_TEMPLATE.md
-│   ├── scripts/create-issues.sh
+│   ├── scripts/create-issues.py     # generates issues from the control pages
 │   └── workflows/{deploy.yml, create-issues.yml}
-└── src/content/docs/
-    ├── index.mdx / overview.mdx / requirements.mdx / audit-process.mdx
-    ├── evidence-tracker.mdx / faq.mdx
-    ├── module-a/         # A.1.1 – A.3.3 (Azure Essentials, shared)
-    ├── module-b/         # B.1.1 – B.4.2 (AVD-specific)
-    ├── engagement/       # offering, qualification, discovery, WAF, MAP, ref arch, deliverables, DoD
-    └── innersource/      # contributing, content governance, roadmap
+├── config/_default/                 # hugo.toml, markup.toml, params.toml, menus.en.toml
+├── scripts/
+│   ├── generate_workfiles.py        # builds the docx/pptx/xlsx templates
+│   └── verify-tables.py             # CI gate: every Markdown table renders as a table
+├── static/templates/                # downloadable customer workfiles
+├── themes/ms-hugo-theme/            # submodule → NikoMix/ms-hugo-theme
+└── content/
+    ├── _index.md                    # home
+    └── docs/
+        ├── overview.md / requirements.md / audit-process.md
+        ├── evidence-tracker.md / faq.md
+        ├── module-a/                # A.1.1 – A.3.3 (Azure Essentials, shared)
+        ├── module-b/                # B.1.1 – B.4.2 (AVD-specific)
+        ├── engagement/              # offering, qualification, discovery, WAF, MAP, ref arch, deliverables, DoD
+        └── innersource/             # contributing, content governance, roadmap
 ```
 
 ---

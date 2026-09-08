@@ -1,4 +1,4 @@
-"""Generate AVD specialization workfiles (docx/pptx/xlsx) into public/templates/."""
+"""Generate AVD specialization workfiles (docx/pptx/xlsx) into static/templates/."""
 from pathlib import Path
 from docx import Document
 from docx.shared import Pt, RGBColor
@@ -13,7 +13,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.utils import get_column_letter
 
 ROOT = Path(__file__).resolve().parent.parent
-PUB = ROOT / "public" / "templates"
+PUB = ROOT / "static" / "templates"
 ENG = PUB / "engagement"
 DEL = PUB / "deliverables"
 AUD = PUB / "audit"

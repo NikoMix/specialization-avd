@@ -1,0 +1,83 @@
+# ------------------------------------------------------------------------------
+# Site parameters. Every key here overrides the matching default in the theme's
+# own `hugo.toml`; anything omitted falls back to that default.
+# ------------------------------------------------------------------------------
+
+# The theme's bundled four-square mark is a placeholder and is NOT a Microsoft
+# asset, so it stays off. `brand` / `product` render as the two-part wordmark.
+brand = 'Azure Virtual Desktop'
+product = 'Advanced Specialization'
+showBrandLogo = false
+
+description = 'Partner enablement guide for the Microsoft Azure Virtual Desktop Advanced Specialization audit (checklist V2.7.1).'
+keywords = ['azure virtual desktop', 'avd', 'advanced specialization', 'audit', 'partner', 'evidence']
+tagline = 'Discovery to audit pass, in one place'
+
+colorScheme = 'auto'
+showThemeToggle = true
+dateFormat = ':date_long'
+
+[header]
+  sticky = true
+  showSearch = true
+  showLanguageSwitcher = false
+
+[breadcrumbs]
+  enable = true
+  showCurrent = true
+
+[page]
+  # Control pages are reference material, not posts — no dates or bylines.
+  showDate = false
+  showLastmod = false
+  showReadingTime = true
+  showWordCount = false
+  showAuthor = false
+  showTaxonomies = false
+  showPrevNext = true
+  showToc = true
+  tocStartLevel = 2
+  tocEndLevel = 3
+  showShare = false
+  showFeedback = false
+  showEditLink = true
+  editUrl = 'https://github.com/NikoMix/specialization-avd/edit/main/content'
+  relatedCount = 3
+
+[list]
+  showSummary = true
+  showThumbnail = false
+  summaryLength = 30
+
+[search]
+  enable = true
+  maxResults = 12
+
+[footer]
+  showPoweredBy = false
+  showThemeToggle = true
+  copyright = 'Partner enablement content. Refer to your Microsoft Partner Agreement for usage terms. Microsoft, Azure and Azure Virtual Desktop are trademarks of the Microsoft group of companies; this site is not affiliated with or endorsed by Microsoft.'
+
+[seo]
+  openGraph = true
+  twitterCards = true
+  schema = true
+
+[build]
+  # Pinned to the LibSass transpiler bundled with the Hugo extended edition so
+  # the build is identical locally and in CI with no extra tooling. "auto"
+  # resolves the transpiler lazily, so a stray non-Dart `sass` binary on PATH
+  # fails the build at publish time instead of falling back.
+  transpiler = 'libsass'
+  sourceMap = true
+
+[banner]
+  enable = true
+  text = 'Checklist V2.7.1 is active through 30 June 2026. V2.8 PREVIEW lands 1 June 2026.'
+  linkLabel = 'Audit process'
+  # No leading slash: the theme runs this through `relURL`, which returns a
+  # leading-slash path unchanged and would drop the Pages sub-path.
+  linkUrl = 'docs/audit-process/'
+  icon = 'info'
+  dismissible = true
+  key = 'v271-window'

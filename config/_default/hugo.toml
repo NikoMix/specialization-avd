@@ -1,0 +1,73 @@
+# ------------------------------------------------------------------------------
+# Azure Virtual Desktop — Advanced Specialization
+#
+# Static site generator: Hugo (extended), theme: github.com/NikoMix/ms-hugo-theme
+# consumed as a Hugo Module so the remote template is pulled at build time by
+# the GitHub Actions workflow (.github/workflows/deploy.yml).
+#
+# `baseURL` below is the default for the upstream repository. The deploy
+# workflow overrides it with `--baseURL` taken from actions/configure-pages, so
+# forks and template copies build with the correct sub-path automatically and
+# need no manual edit here.
+# ------------------------------------------------------------------------------
+
+baseURL = 'https://nikomix.github.io/specialization-avd/'
+title = 'Azure Virtual Desktop – Advanced Specialization'
+
+locale = 'en-gb'
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+
+enableRobotsTXT = true
+enableGitInfo = false
+
+# The remote template is consumed as a pinned git submodule at
+# `themes/ms-hugo-theme`, checked out by the deploy workflow with
+# `submodules: recursive`.
+#
+# It is deliberately NOT a Hugo Module: Go's module packer strips every
+# directory named `vendor`, which drops the theme's
+# `assets/scss/vendor/_chroma.scss` and breaks the Sass build with
+# "File to import not found or unreadable: vendor/chroma".
+theme = 'ms-hugo-theme'
+
+[pagination]
+  pagerSize = 30
+  path = 'page'
+
+[outputs]
+  home = ['html', 'rss']
+  section = ['html', 'rss']
+  taxonomy = ['html']
+  term = ['html', 'rss']
+
+[services]
+  [services.rss]
+    limit = 30
+
+[taxonomies]
+  module = 'modules'
+  tag = 'tags'
+
+[minify]
+  disableXML = true
+  [minify.tdewolff.html]
+    keepWhitespace = false
+
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+[related]
+  includeNewer = true
+  threshold = 60
+  toLower = true
+
+  [[related.indices]]
+    name = 'modules'
+    weight = 100
+
+  [[related.indices]]
+    name = 'tags'
+    weight = 80

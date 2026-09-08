@@ -1,0 +1,109 @@
+[[main]]
+  name = 'Guide'
+  pageRef = '/docs'
+  weight = 10
+
+[[main]]
+  name = 'Module A'
+  pageRef = '/docs/module-a'
+  weight = 20
+
+[[main]]
+  name = 'Module B'
+  pageRef = '/docs/module-b'
+  weight = 30
+
+[[main]]
+  name = 'Engagement'
+  weight = 40
+
+  [[main]]
+    parent = 'Engagement'
+    name = 'Playbook'
+    pageRef = '/docs/engagement'
+    weight = 10
+
+  [[main]]
+    parent = 'Engagement'
+    name = 'Reference architectures'
+    pageRef = '/docs/engagement/reference-architectures'
+    weight = 20
+
+  [[main]]
+    parent = 'Engagement'
+    name = 'Deliverable templates'
+    pageRef = '/docs/engagement/deliverables'
+    weight = 30
+
+[[main]]
+  name = 'Evidence tracker'
+  pageRef = '/docs/evidence-tracker'
+  weight = 50
+
+[[main]]
+  name = 'FAQ'
+  pageRef = '/docs/faq'
+  weight = 60
+
+# --- Footer link columns ------------------------------------------------------
+[[footer]]
+  name = 'Audit'
+  weight = 10
+
+  [[footer]]
+    parent = 'Audit'
+    name = 'Overview'
+    pageRef = '/docs/overview'
+
+  [[footer]]
+    parent = 'Audit'
+    name = 'Pre-qualification requirements'
+    pageRef = '/docs/requirements'
+
+  [[footer]]
+    parent = 'Audit'
+    name = 'Audit process'
+    pageRef = '/docs/audit-process'
+
+[[footer]]
+  name = 'Controls'
+  weight = 20
+
+  [[footer]]
+    parent = 'Controls'
+    name = 'Module A – Azure Essentials'
+    pageRef = '/docs/module-a'
+
+  [[footer]]
+    parent = 'Controls'
+    name = 'Module B – Azure Virtual Desktop'
+    pageRef = '/docs/module-b'
+
+  [[footer]]
+    parent = 'Controls'
+    name = 'Evidence tracker'
+    pageRef = '/docs/evidence-tracker'
+
+[[footer]]
+  name = 'Contribute'
+  weight = 30
+
+  [[footer]]
+    parent = 'Contribute'
+    name = 'Innersource'
+    pageRef = '/docs/innersource'
+
+  [[footer]]
+    parent = 'Contribute'
+    name = 'Contributing'
+    pageRef = '/docs/innersource/contributing'
+
+  [[footer]]
+    parent = 'Contribute'
+    name = 'Roadmap'
+    pageRef = '/docs/innersource/roadmap'
+
+[[legal]]
+  name = 'Search'
+  pageRef = '/search'
+  weight = 10
