@@ -7,17 +7,17 @@
 *                                              @your-org/practice-lead-avd
 
 # Audit controls — owned by the audit / compliance lead
-/src/content/docs/module-a/                    @your-org/practice-lead-audit
-/src/content/docs/module-b/                    @your-org/practice-lead-audit
-/src/content/docs/requirements.mdx             @your-org/practice-lead-audit
-/src/content/docs/audit-process.mdx            @your-org/practice-lead-audit
-/src/content/docs/evidence-tracker.mdx         @your-org/practice-lead-audit
+/content/docs/module-a/                        @your-org/practice-lead-audit
+/content/docs/module-b/                        @your-org/practice-lead-audit
+/content/docs/requirements.md                  @your-org/practice-lead-audit
+/content/docs/audit-process.md                 @your-org/practice-lead-audit
+/content/docs/evidence-tracker.md              @your-org/practice-lead-audit
 
 # Engagement playbook — owned by the AVD delivery lead
-/src/content/docs/engagement/                  @your-org/practice-lead-avd
+/content/docs/engagement/                      @your-org/practice-lead-avd
 
 # Innersource governance — owned by the enablement lead
-/src/content/docs/innersource/                 @your-org/practice-lead-enablement
+/content/docs/innersource/                     @your-org/practice-lead-enablement
 /CONTRIBUTING.md                               @your-org/practice-lead-enablement
 /CODEOWNERS                                    @your-org/practice-lead-enablement
 
@@ -28,5 +28,6 @@
 # CI / automation — owned by platform engineering
 /.github/workflows/                            @your-org/platform-engineering
 /.github/scripts/                              @your-org/platform-engineering
-/astro.config.mjs                              @your-org/platform-engineering
-/package.json                                  @your-org/platform-engineering
+/config/                                       @your-org/platform-engineering
+/.gitmodules                                   @your-org/platform-engineering
+/scripts/                                      @your-org/platform-engineering

@@ -1,0 +1,101 @@
++++
+title = 'WAF Assessment – AVD Lens'
+linkTitle = 'WAF Assessment'
+description = 'Azure Well-Architected Framework assessment process for AVD with explicit focus on Cost, Performance, and Reliability.'
+weight = 40
+toc = true
++++
+
+{{% alert type="tip" title="Download the workfile" %}}
+{{< download href="/templates/engagement/waf-assessment.xlsx" >}}WAF assessment workbook with one tab per pillar (XLSX){{< /download >}}
+{{% /alert %}}
+
+## When to use this
+
+- During **design** to validate architectural decisions before HLD sign-off
+- During **PoC / Pilot** to validate measured outcomes
+- During **hypercare** to plan post-Go-Live improvements
+- Always **at least once** per engagement to produce audit evidence for
+  [A.2.2](/docs/module-a/2-2-well-architected-workloads) and
+  [B.2.2](/docs/module-b/2-2-azure-well-architected-review)
+
+## Inputs you need from the customer
+
+| # | Input | Source | Format |
+|---|---|---|---|
+| 1 | HLD (or in-progress design) | Engagement | Document |
+| 2 | Cost model / monthly burn target | Finance / IT | Spreadsheet |
+| 3 | Performance targets (logon, app launch) | EUC / business | Document or verbal |
+| 4 | Availability targets (RTO / RPO) | Business continuity | Document |
+| 5 | Workshop attendees: customer EUC lead, finance / cost owner, security, ops | Customer | Calendar |
+
+## Step-by-step
+
+1. **Open the Azure Well-Architected Review tool** with the **Azure Virtual
+   Desktop** workload lens selected.
+
+2. **Walk all five pillars** with the customer. Do not skip — the auditor
+   will check. Capture every answer.
+
+3. **Deep-dive on Cost / Performance / Reliability** using the AVD-specific
+   levers below.
+
+4. **Export the WAF result PDF** when complete.
+
+5. **Triage recommendations** into a register (accept / action / backlog /
+   decline-with-rationale) with named owners.
+
+6. **Document customer decisions** in workshop minutes.
+
+7. **Schedule the next review** (annual minimum).
+
+## AVD-specific lever guide
+
+### Cost — biggest levers first
+
+| # | Lever | Typical saving | Where to act |
+|---|---|---|---|
+| 1 | **Scaling plan** for pooled host pools | 30–60% off baseline | Host pool → Scaling plan |
+| 2 | **Reserved Instances / Savings Plans** for baseline session host capacity | 30–60% off compute | Cost Management |
+| 3 | **Right-size session host SKU** per persona density | 10–30% | Re-test density per persona |
+| 4 | **FSLogix container size budget** | Indirect (storage tier and cleanup) | Runbook |
+| 5 | **Marketplace vs custom image** trade-off | Indirect | Image strategy decision |
+
+### Performance — biggest levers first
+
+| # | Lever | Typical impact | Where to act |
+|---|---|---|---|
+| 1 | **RDP Shortpath for managed networks** | Lower latency, fewer disconnects | Host pool config + network |
+| 2 | **Region selection** for proximity | Logon time + chat / video apps | Design |
+| 3 | **Profile storage tier** (Premium / ANF) | Logon time, app open | FSLogix storage |
+| 4 | **Image hygiene** (Teams optimisation, pre-staged Office, bloat removal) | Logon + app launch | Gold image |
+| 5 | **Density validated under realistic load** | Predictable UX | B.4.1 testing |
+
+### Reliability — biggest levers first
+
+| # | Lever | Typical impact | Where to act |
+|---|---|---|---|
+| 1 | **Ring-based update strategy** (Validation host pool → Production) | Catch issues before users hit them | Patching runbook |
+| 2 | **Paired-region BCDR host pool + profile replication** | Region outage survivability | Design + IaC |
+| 3 | **Availability Zones** for session hosts where supported | Zone outage survivability | Host pool config |
+| 4 | **Scaling plan ramp-up safety margin** | Absorb host failures | Scaling plan |
+| 5 | **AVD service-side outage runbook** | User communication + fallback | Runbook |
+
+## Output: customer-ready deliverable
+
+- WAF Review export (PDF)
+- Recommendation register (Excel)
+- Workshop minutes (PDF / Word) with named attendees and decisions
+- Re-assessment cadence committed in the engagement DoD
+
+This pack is the direct evidence for
+[A.2.2](/docs/module-a/2-2-well-architected-workloads) and
+[B.2.2](/docs/module-b/2-2-azure-well-architected-review).
+
+## Reuse & contribute back
+
+{{% alert type="tip" %}}
+Hit a Cost / Performance / Reliability lever this page doesn't list? PR
+it in with the impact you measured in the field — the lever table is the
+highest-leverage page in this repo.
+{{% /alert %}}

@@ -1,0 +1,51 @@
++++
+title = 'Innersource – Roadmap'
+linkTitle = 'Roadmap'
+description = 'Backlog and roadmap for AVD specialization content, including V2.8 PREVIEW transition.'
+weight = 30
+toc = true
++++
+
+## Active backlog
+
+| ID | Item | Owner | Status |
+|---|---|---|---|
+| R1 | Initial repo scaffold from master blueprint (V2.7.1) | Practice lead AVD | ✅ Done |
+| R2 | Engagement Agent extended with AVD-specific routing | AI tooling lead | ✅ Done |
+| R3 | Three reference architectures published (single, multi, personal) | Practice lead AVD | ✅ Done |
+| R4 | RDS-to-AVD + Citrix-on-Azure-to-AVD + Horizon-on-Azure-to-AVD migration assessment patterns | Practice lead AVD | 🟡 Initial draft |
+| R5 | AppAttach packaging walkthrough page | EUC engineering | ⬜ Backlog |
+| R6 | Sample AVD landing zone Bicep modules referenced inline | Platform engineering | ⬜ Backlog |
+| R7 | Reference cost models per persona (anonymised) | Practice lead AVD | ⬜ Backlog |
+| R8 | Sample Customer Case Study (anonymised) | Practice lead AVD | ⬜ Backlog |
+| R9 | Native AVD vs Windows 365 decision page | Practice lead AVD | ⬜ Backlog |
+| R10 | Mocked auditor Q&A by control | Audit lead | ⬜ Backlog |
+
+## V2.8 PREVIEW transition (Jun 1, 2026)
+
+{{% alert type="caution" %}}
+V2.8 lands as a PREVIEW on **Jun 1, 2026**. V2.7.1 remains the active
+checklist through **Jun 30, 2026**. The window for V2.7.1-vs-V2.8
+selection on a booked audit is Jun 1–30, 2026.
+{{% /alert %}}
+
+| ID | Item | Trigger |
+|---|---|---|
+| V8-1 | Diff V2.7.1 → V2.8 PREVIEW once published | V2.8 publication |
+| V8-2 | Create new control pages for added controls | V8-1 |
+| V8-3 | Update existing control pages for wording / evidence changes | V8-1 |
+| V8-4 | Re-run `Create Audit Engagement Issues` for the new cycle once control pages match V2.8 | V8-2, V8-3 |
+| V8-5 | Update `audit-process.md` with active version once V2.8 becomes mandatory | V2.8 mandatory date |
+| V8-6 | Deprecate any V2.7.1-only pages | V2.8 mandatory date |
+
+## Quarterly review schedule
+
+Set per practice lead in CODEOWNERS. Default: Q1 (Feb), Q2 (May), Q3 (Aug),
+Q4 (Nov).
+
+## How to add to the backlog
+
+- Open an issue using the **Control Improvement**, **Template Improvement**,
+  or **Lesson Learned** template
+- Practice lead triages weekly and adds prioritised items to this roadmap
+- Anyone can self-assign and PR

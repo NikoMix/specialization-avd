@@ -1,0 +1,95 @@
++++
+title = 'Assessment Platform Inputs – MAP & RDS-to-AVD'
+linkTitle = 'Assessment Platform Inputs'
+description = 'Use the Microsoft Assessment Platform (MAP) toolkit and Azure Migrate to produce a defensible RDS / Citrix / Horizon-to-AVD migration assessment.'
+weight = 50
+toc = true
++++
+
+{{% alert type="tip" title="Download the workfile" %}}
+{{< download href="/templates/engagement/assessment-platform-inputs.xlsx" >}}Assessment inputs workbook — MAP, RDS/Citrix/Horizon migration matrices, W365 interop (XLSX){{< /download >}}
+{{% /alert %}}
+
+## When to use this
+
+For any **migration** engagement (RDS → AVD, Citrix on Azure → AVD, Horizon →
+AVD, or VDI consolidation). For **greenfield** AVD, this page is optional —
+go directly to [Qualification Questionnaire](/docs/engagement/qualification-questionnaire)
+and [Discovery Workshop](/docs/engagement/discovery-workshop).
+
+## Inputs you need from the customer
+
+| # | Input | Source | Format |
+|---|---|---|---|
+| 1 | Read access to RDS / Citrix / Horizon management plane | Source platform admin | Service account |
+| 2 | Read access to existing Active Directory | Identity admin | Service account |
+| 3 | Network reach from a MAP / Azure Migrate scan box to source systems | Network admin | Firewall rules |
+| 4 | App publishing inventory from Citrix Studio / RDS RemoteApp / Horizon | Source platform admin | Export |
+| 5 | Source platform usage / session telemetry (last 30–90 days) | Source platform admin | Export |
+
+## Step-by-step
+
+1. **Stand up MAP toolkit** on a Windows VM with read access to the source
+   environment. Use the **Server consolidation / Virtual Desktop**
+   scenarios.
+
+2. **Run MAP discovery** against the AD / RDS / Citrix / Horizon footprint.
+   Output: inventory of session hosts, users, apps, OS versions.
+
+3. **Run Azure Migrate** discovery against the source VMs (session hosts,
+   broker, license server, profile servers). Output: dependency mapping,
+   right-size sizing for Azure.
+
+4. **Pull source platform telemetry** for the last 30–90 days:
+   - Citrix: Director / Analytics — sessions per server, peak concurrency,
+     app launch counts, logon times
+   - RDS: Performance Monitor / Event Logs — session counts, server load
+   - Horizon: vCenter / Horizon Console — desktop pool sizing, concurrency
+
+5. **Synthesise into the AVD sizing model:**
+   - Persona-by-persona user count
+   - App inventory with publishing source (RDS RemoteApp / Citrix published
+     app / Horizon application pool / Citrix published desktop / dedicated
+     desktop)
+   - Peak concurrency by persona
+   - Working hours profile
+   - Apps to deliver via MSIX / AppAttach vs gold-image install
+
+6. **Map source → AVD topology:**
+   - Citrix MCS pool → AVD pooled multi-session
+   - Citrix PVS pool → AVD pooled multi-session + gold image
+   - Citrix VDI personal → AVD personal
+   - RDS RemoteApp → AVD published app group on a pooled host pool
+   - Horizon instant clones → AVD pooled multi-session
+   - Horizon full clones → AVD personal
+
+7. **Produce the assessment output document** combining MAP + Azure Migrate +
+   source telemetry into a single evidence pack.
+
+## Output: customer-ready deliverable
+
+- **MAP scan report** (Excel / PDF)
+- **Azure Migrate report** (PDF)
+- **Source platform telemetry** (Excel)
+- **AVD sizing model** (Excel) — sessions per host, host SKU, total hosts per
+  persona
+- **Source-to-AVD topology mapping** (PDF / Word)
+- **Migration assessment summary** (PDF) for customer sponsor sign-off
+
+This pack is the direct evidence for
+[B.1.1 Workload Assessment](/docs/module-b/1-1-workload-assessment) when the
+engagement is a migration.
+
+{{% alert type="tip" %}}
+For Citrix on Azure → AVD specifically, Citrix Analytics export combined
+with a 90-day session log gives the cleanest sizing model. Pull it before
+the engagement starts so MAP just corroborates.
+{{% /alert %}}
+
+## Reuse & contribute back
+
+{{% alert type="tip" %}}
+New source platform (Parallels RAS, Workspot, Nutanix Frame, etc.)? PR a
+new "Map source → AVD topology" row and link any source-side telemetry
+export procedure you used.
+{{% /alert %}}

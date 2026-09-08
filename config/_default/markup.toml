@@ -1,0 +1,45 @@
+# ------------------------------------------------------------------------------
+# Markup.
+#
+# TABLES ARE LOAD-BEARING in this repository: every audit control page is a set
+# of evidence tables, so the GitHub Flavored Markdown table extension below must
+# stay enabled. The theme renders each table through
+# `layouts/_markup/render-table.html`, which wraps it in a scrollable, keyboard
+# reachable region.
+#
+# `noClasses = false` is required by the theme: it maps Chroma's token classes
+# onto its own colour tokens so syntax highlighting follows light / dark mode.
+# See https://gohugo.io/configuration/markup/
+# ------------------------------------------------------------------------------
+
+[goldmark]
+  [goldmark.parser]
+    wrapStandAloneImageWithinParagraph = false
+    [goldmark.parser.attribute]
+      block = true
+      title = true
+
+  [goldmark.renderer]
+    unsafe = true
+    hardWraps = false
+
+  [goldmark.extensions]
+    strikethrough = true
+    linkify = true
+    # Required — audit evidence checklists are Markdown tables.
+    table = true
+    taskList = true
+    typographer = true
+
+[highlight]
+  noClasses = false
+  lineNumbersInTable = true
+  lineNos = false
+  tabWidth = 2
+  guessSyntax = true
+  codeFences = true
+
+[tableOfContents]
+  startLevel = 2
+  endLevel = 3
+  ordered = false

@@ -1,17 +1,40 @@
 name: Create Audit Engagement Issues
 
-on:
-  # Run manually — do this immediately after creating the repo from the template,
-  # or after each completed audit to seed issues for the next cycle.
-  workflow_dispatch:
+# Creates one GitHub issue per requirement of the audit guide, for the current
+# audit cycle. Issue bodies are generated from the guide itself — the
+# `## Required Evidence Checklist` table on every Module A / Module B control
+# page — so the docs and the issues cannot drift apart.
+#
+# Re-running is safe: any issue title that already carries this cycle's label
+# is skipped, so the workflow only creates what does not already exist.
 
-  # Scheduled run — fires 9 months after your typical audit month so partners have
-  # 3 months to re-collect evidence before the next annual audit.
+on:
+  workflow_dispatch:
+    inputs:
+      granularity:
+        description: >-
+          control = one issue per control with every requirement as a checkbox.
+          requirement = the same, plus one issue per individual Module B
+          evidence item.
+        type: choice
+        options: [control, requirement]
+        default: control
+      cycle_year:
+        description: Audit cycle year (defaults to the current year).
+        type: string
+        default: ''
+      dry_run:
+        description: Print the issues that would be created without creating them.
+        type: boolean
+        default: false
+
+  # Scheduled run — fires 9 months after a typical June audit month so partners
+  # have 3 months to re-collect evidence before the next annual audit.
   #
   # HOW TO SET YOUR SCHEDULE:
   #   Take your typical audit completion month and add 9 months.
-  #   Example: audit finishes in June → scheduled run fires March 1st the following year.
-  #   The default below fires on March 1st at 09:00 UTC every year.
+  #   Example: audit finishes in June -> scheduled run fires March 1st the
+  #   following year. The default below fires on March 1st at 09:00 UTC.
   schedule:
     - cron: "0 9 1 3 *"
 
@@ -27,10 +50,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Determine audit cycle year
+      - name: Determine audit cycle
         id: cycle
         run: |
-          YEAR=$(date -u +%Y)
+          YEAR="${{ inputs.cycle_year }}"
+          [ -n "$YEAR" ] || YEAR=$(date -u +%Y)
           echo "year=$YEAR"            >> "$GITHUB_OUTPUT"
           echo "label=audit-$YEAR"     >> "$GITHUB_OUTPUT"
           echo "milestone=Audit $YEAR" >> "$GITHUB_OUTPUT"
@@ -39,16 +63,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh label create "pre-qualification" --color "0e8a16" --description "Pre-qualification gate"               --repo "$GITHUB_REPOSITORY" --force
-          gh label create "module-a"          --color "e4e669" --description "Module A - Azure Essentials"         --repo "$GITHUB_REPOSITORY" --force
-          gh label create "module-b"          --color "d73a4a" --description "Module B - Azure Virtual Desktop"    --repo "$GITHUB_REPOSITORY" --force
-          gh label create "audit-evidence"    --color "5319e7" --description "Evidence collection task"            --repo "$GITHUB_REPOSITORY" --force
+          gh label create "pre-qualification" --color "0e8a16" --description "Pre-qualification gate"            --repo "$GITHUB_REPOSITORY" --force
+          gh label create "module-a"          --color "e4e669" --description "Module A - Azure Essentials"      --repo "$GITHUB_REPOSITORY" --force
+          gh label create "module-b"          --color "d73a4a" --description "Module B - Azure Virtual Desktop" --repo "$GITHUB_REPOSITORY" --force
+          gh label create "audit-evidence"    --color "5319e7" --description "Evidence collection task"         --repo "$GITHUB_REPOSITORY" --force
           gh label create "${{ steps.cycle.outputs.label }}" --color "0075ca" \
             --description "Audit cycle ${{ steps.cycle.outputs.year }}" \
             --repo "$GITHUB_REPOSITORY" --force
 
       - name: Create or find milestone
         id: milestone
+        if: ${{ !inputs.dry_run }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -76,13 +101,15 @@ jobs:
             exit 1
           fi
 
-          echo "number=$NUMBER" >> "$GITHUB_OUTPUT"
-          echo "title=$TITLE"   >> "$GITHUB_OUTPUT"
+          echo "title=$TITLE" >> "$GITHUB_OUTPUT"
 
       - name: Create issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
           CYCLE_LABEL: ${{ steps.cycle.outputs.label }}
           MILESTONE: ${{ steps.milestone.outputs.title }}
-          REPO: ${{ github.repository }}
-        run: bash .github/scripts/create-issues.sh
+          GRANULARITY: ${{ inputs.granularity || 'control' }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          PYTHONIOENCODING: utf-8
+        run: python3 .github/scripts/create-issues.py
